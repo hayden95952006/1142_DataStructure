@@ -37,4 +37,4 @@ int main() {
 	printStudent(one);// 把one的資料複製一份給函式s做輸出
 	return 0;
 }
-ㄋ
+
