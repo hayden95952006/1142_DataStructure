@@ -49,9 +49,9 @@ public:
 int precedence(char op) {
     switch (op) {
     case '+':
-    case '-': return 1;
+    case '-': return 1; // 低優先權
     case '*':
-    case '/': return 2;
+    case '/': return 2; // 高優先權
 
     }
     return 0;
@@ -63,24 +63,24 @@ void InfixToPostfix(const char* infix, char* postfix) {
     int i = 0, j = 0;
     char token;
 
-    while ((token = infix[i++]) != '\0') {
+    while ((token = infix[i++]) != '\0') {  // 重複直到換行 (Enter)
 
-        // 運算元 → 直接輸出
+        // 將運算元直接輸出
         if (isalnum(token)) {
             postfix[j++] = token;
         }
 
-        // 左括號 '('→ push
+        // 將左括號放進儲存
         else if (token == '(') {
             s.push(token);
         }
 
-        // 右括號 ')' pop直到 '('
+        // 將右括號的東西一直丟到左括號
         else if (token == ')') {
             while (!s.isEmpty() && s.peek() != '(') {
                 postfix[j++] = s.pop();
             }
-            s.pop(); // 丟掉 '('
+            s.pop(); // 丟掉左括號
         }
 
         // 運算子
