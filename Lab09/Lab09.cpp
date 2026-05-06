@@ -60,7 +60,7 @@ private:
     TreeNode* deleteNode(TreeNode* node, int val) {
         if (node == nullptr) return nullptr;
 
-        // 1. 找要刪的節點
+        // 找要刪的節點
         if (val < node->data) {
             node->left = deleteNode(node->left, val);
         }
@@ -70,30 +70,30 @@ private:
         else {
             // === 找到了要刪除的節點 ===
 
-            // 情況 1：沒有子節點（葉節點）
+            // 沒有子節點的刪除法
             if (node->left == nullptr && node->right == nullptr) {
                 delete node;
-                return nullptr;
+                return nullptr; // 沒有子節點，所以直接回傳空
             }
 
-            // 情況 2：只有一個子節點
-            else if (node->left == nullptr) {
+            // 只有一個子節點的刪除法
+            else if (node->left == nullptr) {   // 只有右邊的子節點
                 TreeNode* temp = node->right;
                 delete node;
-                return temp;
+                return temp;    // 直接讓子替代根
             }
-            else if (node->right == nullptr) {
+            else if (node->right == nullptr) {  // 只有左邊的子節點
                 TreeNode* temp = node->left;
                 delete node;
-                return temp;
+                return temp;    // 直接讓子替代根
             }
 
-            // 情況 3：有兩個子節點
+            // 有兩個子節點的回傳法
             else {
-                // 從右子樹找最小值（替補）
+                // 從右子樹找最小值
                 TreeNode* successor = findMin(node->right);
 
-                // 用替補值覆蓋目前節點
+                // 用替補值替代目前節點
                 node->data = successor->data;
 
                 // 刪除右子樹中的替補節點
