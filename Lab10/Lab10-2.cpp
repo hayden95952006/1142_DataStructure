@@ -41,40 +41,43 @@ public:
         heap = arr;
 
         // 從最後一個非葉子節點開始堆化
-        for (int i = (heap.size() / 2) - 1; i >= 0; i--) {
+        for (int i = (heap.size() / 2) - 1; i >= 0; i--) { // 從最後一個父節點開始向上執行Max Heap
             heapify(i);
         }
     }
 
-    // 堆化函式
-    void heapify(int i) {
-        int smallest = i;       // 假設目前節點最小
-        int left = 2 * i + 1;   // 左子節點
-        int right = 2 * i + 2;  // 右子節點
 
-        // 如果左子節點比較小
+    void heapify(int i) {// 堆化函式（確保以 i 為根的子樹符合Max Heap性質）
+        int smallest = i;       // 假設當前節點是最大的
+        int left = 2 * i + 1;   // 左子節點索引
+        int right = 2 * i + 2;  // 右子節點索引
+
+        // if判斷式，檢查左子節點是否為有效範圍且比當前節點(父節點)大
+        //如果判斷式成立，把largest設為left
         if (left < heap.size() && heap[left] < heap[smallest]) {
             smallest = left;
         }
 
-        // 如果右子節點比較小
+        // if判斷式，檢查右子節點是否為有效範圍且比當前節點(父節點)大
+        //如果判斷式成立，把largest設為right
         if (right < heap.size() && heap[right] < heap[smallest]) {
             smallest = right;
         }
 
-        // 如果最小值不是父節點
+        // if判斷式，如果最大的不是父節點，交換並繼續堆化                   
+        // 遞迴處理受影響的子樹
         if (smallest != i) {
             swap(heap[i], heap[smallest]);
 
-            // 繼續堆化
+            // 繼續對受影響的子樹進行堆化
             heapify(smallest);
         }
     }
 
-    // 印出Min Heap
+    // 顯示Heap的內容(使用BFS)
     void printHeap() {
-        for (int val : heap) {
-            cout << val << " ";
+        for (int val : heap) {// 遍歷 Max Heap 中的每個元素
+            cout << val << " ";// 輸出元素
         }
         cout << endl;
     }
@@ -82,7 +85,7 @@ public:
 
 int main() {
     // 從文件讀取輸入元素
-    string filename = "input1.txt";//請貼上input檔案的正確路徑
+    string filename = "input3.txt";//請貼上input檔案的正確路徑
     vector<int> arr = readFromFile(filename);//讀取數據
 
     if (arr.empty()) {// 如果數據為空
@@ -103,6 +106,6 @@ int main() {
     maxHeap.printHeap();
     cout << endl;
 
-    system("pause");
+   
     return 0;
 }
